@@ -154,12 +154,104 @@ function updatePowerHud() {
     $("usePower").disabled = false;
   }
 }
+
+function animateCoinGain(oldCoins, newCoins) {
+  const screen = document.querySelector(".screen:not(.hidden)");
+  const target = screen?.querySelector(".coins");
+  const counter = target?.querySelector("b");
+
+  if (!target || !counter) return;
+
+  const source = screen.querySelector(
+    "#slotResult, #scratchResult, #rushResult"
+  );
+
+  const start = source
+    ? source.getBoundingClientRect()
+    : target.getBoundingClientRect();
+
+  const end = target.getBoundingClientRect();
+
+  const startX = start.left + start.width / 2;
+  const startY = start.top + start.height / 2;
+  const endX = end.left + end.width / 2;
+  const endY = end.top + end.height / 2;
+
+  // Monedas voladoras
+  for (let i = 0; i < 9; i++) {
+    const coin = document.createElement("span");
+    coin.className = "jw-flying-coin";
+    coin.textContent = "🪙";
+
+    const offsetX = (Math.random() - 0.5) * 100;
+    const offsetY = (Math.random() - 0.5) * 55;
+
+    coin.style.left = startX + offsetX + "px";
+    coin.style.top = startY + offsetY + "px";
+
+    document.body.appendChild(coin);
+
+    const animation = coin.animate([
+      { transform: "translate(0,0) scale(1)", opacity: 1 },
+      {
+        transform: `translate(${endX - startX - offsetX}px, ${endY - startY - offsetY}px) scale(.35)`,
+        opacity: 0
+      }
+    ], {
+      duration: 750 + i * 45,
+      delay: i * 35,
+      easing: "cubic-bezier(.2,.8,.3,1)"
+    });
+
+    animation.onfinish = () => coin.remove();
+  }
+
+  // Contador que aumenta rápidamente
+  const duration = 850;
+  const startTime = performance.now();
+
+  function countUp(now) {
+    const progress = Math.min(1, (now - startTime) / duration);
+    const eased = 1 - Math.pow(1 - progress, 3);
+
+    counter.textContent = Math.round(
+      oldCoins + (newCoins - oldCoins) * eased
+    );
+
+    if (progress < 1) {
+      requestAnimationFrame(countUp);
+    } else {
+      counter.textContent = newCoins;
+    }
+  }
+
+  requestAnimationFrame(countUp);
+
+  // Temblor al recibir las fichas
+  target.classList.remove("coin-impact");
+  void target.offsetWidth;
+  target.classList.add("coin-impact");
+
+  setTimeout(() => {
+    target.classList.remove("coin-impact");
+  }, 650);
+}
+
 function reward(amount) {
+  const oldCoins = data.coins;
   const won = Math.round(amount * multiplier());
-  data.coins += won; data.wins++;
-  save(); update();
+
+  data.coins += won;
+  data.wins++;
+
+  save();
+  update();
+
+  animateCoinGain(oldCoins, data.coins);
+
   return won;
 }
+
 function charge(type) {
   const price = cost(type);
   if (data.coins < price) { alert("No tenés fichas suficientes."); return false; }
