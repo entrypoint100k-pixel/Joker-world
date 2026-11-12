@@ -1387,14 +1387,24 @@ if(document.readyState==="loading"){
 } else {
   init();
 }
-document.addEventListener("visibilitychange", () => {
+
+document.addEventListener("visibilitychange", async () => {
   if (document.hidden) {
-    if (audioCtx && audioCtx.state === "running") {
-      audioCtx.suspend();
+    if (audioContext && audioContext.state === "running") {
+      await audioContext.suspend();
     }
   } else {
-    if (audioCtx && audioCtx.state === "suspended") {
-      audioCtx.resume();
+    if (audioContext && audioContext.state === "suspended") {
+      try {
+        await audioContext.resume();
+      } catch (error) {
+        console.warn("No se pudo reanudar el audio:", error);
+      }
     }
+
+    update();
+  }
+});
+
   }
 });
