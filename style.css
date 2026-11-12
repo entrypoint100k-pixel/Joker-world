@@ -85,5 +85,31 @@ footer{text-align:center;font-size:7px;color:#79638e;margin-top:30px;padding-top
 .leaderboard-list{display:flex;flex-direction:column;gap:7px;max-width:650px;margin:15px auto}
 .rank-row{display:grid;grid-template-columns:45px 1fr auto;gap:10px;align-items:center;padding:12px;background:#211333;border:2px solid #70409b;font-size:8px}
 .rank-row strong{color:var(--gold)}.rank-row.rank-top{border-color:var(--gold);background:#30203e}
+
+/* JOKER WORLDS - COIN REWARD ANIMATION */
+
+.jw-flying-coin {
+  position: fixed;
+  z-index: 99999;
+  pointer-events: none;
+  font-size: 25px;
+  filter: drop-shadow(0 0 7px #ffd34e);
+  will-change: transform, opacity;
+}
+
+.coins.coin-impact {
+  animation: jwCoinImpact .12s ease-in-out 5;
+  color: #fff1a3;
+  text-shadow: 0 0 10px #ffd34e;
+}
+
+@keyframes jwCoinImpact {
+  0% { transform: translateX(0) scale(1); }
+  25% { transform: translateX(-4px) scale(1.12); }
+  50% { transform: translateX(4px) scale(1.15); }
+  75% { transform: translateX(-3px) scale(1.08); }
+  100% { transform: translateX(0) scale(1); }
+}
+
 #refreshLeaderboard{display:block;margin:15px auto}
 @media(max-width:600px){.cabinet-unit{width:29%;min-width:95px;gap:9px}.machine-tree-open{font-size:6px;padding:8px 3px}.machine-level-grid,.machine-upgrade-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.machine-level-card{min-height:190px;padding:10px 6px}.level-odds{font-size:22px}.rank-row{font-size:7px;grid-template-columns:35px 1fr auto;padding:10px 7px}}
