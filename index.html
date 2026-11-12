@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>JOKER WORLDS</title>
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#9b4dff">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -132,7 +134,22 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="game.js"></script>
   <script src="expansion.js"></script>
+    <script src="game.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js")
+      .then(registration => {
+        console.log("JOKER WORLDS PWA activada:", registration.scope);
+      })
+      .catch(error => {
+        console.error("Error al activar la PWA:", error);
+      });
+  });
+}
+</script>
+
 </body>
 </html>
