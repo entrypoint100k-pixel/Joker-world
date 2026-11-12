@@ -1387,3 +1387,14 @@ if(document.readyState==="loading"){
 } else {
   init();
 }
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    if (audioCtx && audioCtx.state === "running") {
+      audioCtx.suspend();
+    }
+  } else {
+    if (audioCtx && audioCtx.state === "suspended") {
+      audioCtx.resume();
+    }
+  }
+});
