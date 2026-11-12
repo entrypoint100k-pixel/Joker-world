@@ -160,7 +160,6 @@ function tone(freq, duration=.1, volume=.025, wave="square", delay=0) {
   osc.start(start);
   osc.stop(start+duration+.02);
 }
-
 function musicNote(freq,duration,volume,wave="triangle",delay=0) {
   if (!audioSettings.music) return;
 
@@ -183,6 +182,54 @@ function musicNote(freq,duration,volume,wave="triangle",delay=0) {
 
   osc.start(start);
   osc.stop(start+duration+.03);
+}
+
+function musicNote(freq,duration,volume,wave="triangle",delay=0) {
+  if (!audioSettings.music) return;
+
+  const ctx = getAudio();
+  if (!ctx) return;
+
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const start = ctx.currentTime + delay;
+
+  osc.type = wave;
+  osc.frequency.setValueAtTime(freq,start);
+
+  gain.gain.setValueAtTime(.0001,start);
+  gain.gain.exponentialRampToValueAtTime(Math.min(volume * 3, .18),start+.025);
+  gain.gain.exponentialRampToValueAtTime(.0001,start+duration);
+
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+
+  osc.start(start);
+  osc.stop(start+duration+.03);
+}
+
+function tone(freq,duration=.1,volume=.025,wave="square",delay=0) {
+  if (!audioSettings.effects) return;
+
+  const ctx = getAudio();
+  if (!ctx) return;
+
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const start = ctx.currentTime + delay;
+
+  osc.type = wave;
+  osc.frequency.setValueAtTime(freq,start);
+
+  gain.gain.setValueAtTime(.0001,start);
+  gain.gain.exponentialRampToValueAtTime(Math.min(volume * 3, .18),start+.01);
+  gain.gain.exponentialRampToValueAtTime(.0001,start+duration);
+
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+
+  osc.start(start);
+  osc.stop(start+duration+.02);
 }
 
 function playMusicStep() {
