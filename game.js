@@ -12,7 +12,9 @@ const POWER_SECONDS = 180;
 const SHOP_SECONDS = 180;
 
 const data = {
-  coins: 1000, wins: 0, games: 0,
+  coins: 1000,
+  wins: 0,
+  games: 0,
   skills: [],
   inventory: {},
   activePower: null,
@@ -63,7 +65,12 @@ const pixel = {
   speed:["....R...","...RR...","..RRR...","RRRRRRR.","...RRR..","..RRR...","..R.....","........."]
 };
 
-const palette = {Y:"#ffd34e",G:"#70f58a",R:"#ff526b",".":"#10091d"};
+const palette = {
+  Y:"#ffd34e",
+  G:"#70f58a",
+  R:"#ff526b",
+  ".":"#10091d"
+};
 
 let busy = false;
 let spinTimer = null;
@@ -130,89 +137,18 @@ function getAudio() {
 
   if (!audioContext) audioContext = new Audio();
 
-  if (audioContext.state === "suspended") {
+  if (!document.hidden && audioContext.state === "suspended") {
     audioContext.resume().catch(() => {});
   }
 
   return audioContext;
 }
 
-function tone(freq, duration=.1, volume=.025, wave="square", delay=0) {
-  if (!audioSettings.effects) return;
-
-  const ctx = getAudio();
-  if (!ctx) return;
-
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  const start = ctx.currentTime + delay;
-
-  osc.type = wave;
-  osc.frequency.setValueAtTime(freq,start);
-
-  gain.gain.setValueAtTime(.0001,start);
-  gain.gain.exponentialRampToValueAtTime(volume,start+.01);
-  gain.gain.exponentialRampToValueAtTime(.0001,start+duration);
-
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-
-  osc.start(start);
-  osc.stop(start+duration+.02);
-}
-function musicNote(freq,duration,volume,wave="triangle",delay=0) {
-  if (!audioSettings.music) return;
-
-  const ctx = getAudio();
-  if (!ctx) return;
-
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  const start = ctx.currentTime + delay;
-
-  osc.type = wave;
-  osc.frequency.setValueAtTime(freq,start);
-
-  gain.gain.setValueAtTime(.0001,start);
-  gain.gain.exponentialRampToValueAtTime(volume,start+.025);
-  gain.gain.exponentialRampToValueAtTime(.0001,start+duration);
-
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-
-  osc.start(start);
-  osc.stop(start+duration+.03);
-}
-
-function musicNote(freq,duration,volume,wave="triangle",delay=0) {
-  if (!audioSettings.music) return;
-
-  const ctx = getAudio();
-  if (!ctx) return;
-
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  const start = ctx.currentTime + delay;
-
-  osc.type = wave;
-  osc.frequency.setValueAtTime(freq,start);
-
-  gain.gain.setValueAtTime(.0001,start);
-  gain.gain.exponentialRampToValueAtTime(Math.min(volume * 3, .18),start+.025);
-  gain.gain.exponentialRampToValueAtTime(.0001,start+duration);
-
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-
-  osc.start(start);
-  osc.stop(start+duration+.03);
-}
-
 function tone(freq,duration=.1,volume=.025,wave="square",delay=0) {
-  if (!audioSettings.effects) return;
+  if (!audioSettings.effects || document.hidden) return;
 
   const ctx = getAudio();
-  if (!ctx) return;
+  if (!ctx || ctx.state !== "running") return;
 
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
@@ -222,7 +158,10 @@ function tone(freq,duration=.1,volume=.025,wave="square",delay=0) {
   osc.frequency.setValueAtTime(freq,start);
 
   gain.gain.setValueAtTime(.0001,start);
-  gain.gain.exponentialRampToValueAtTime(Math.min(volume * 3, .18),start+.01);
+  gain.gain.exponentialRampToValueAtTime(
+    Math.min(volume * 3,.35),
+    start+.01
+  );
   gain.gain.exponentialRampToValueAtTime(.0001,start+duration);
 
   osc.connect(gain);
@@ -230,10 +169,37 @@ function tone(freq,duration=.1,volume=.025,wave="square",delay=0) {
 
   osc.start(start);
   osc.stop(start+duration+.02);
+}
+
+function musicNote(freq,duration,volume,wave="triangle",delay=0) {
+  if (!audioSettings.music || document.hidden) return;
+
+  const ctx = getAudio();
+  if (!ctx || ctx.state !== "running") return;
+
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const start = ctx.currentTime + delay;
+
+  osc.type = wave;
+  osc.frequency.setValueAtTime(freq,start);
+
+  gain.gain.setValueAtTime(.0001,start);
+  gain.gain.exponentialRampToValueAtTime(
+    Math.min(volume * 3,.18),
+    start+.025
+  );
+  gain.gain.exponentialRampToValueAtTime(.0001,start+duration);
+
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+
+  osc.start(start);
+  osc.stop(start+duration+.03);
 }
 
 function playMusicStep() {
-  if (!audioSettings.music) return;
+  if (!audioSettings.music || document.hidden) return;
 
   const track = musicTracks[currentMusicTheme] || musicTracks.arcade;
   const step = musicIndex % 32;
@@ -261,7 +227,7 @@ function playMusicStep() {
 }
 
 function startArcadeMusic(theme="arcade") {
-  if (!audioSettings.music) return;
+  if (!audioSettings.music || document.hidden) return;
 
   if (musicTimer && currentMusicTheme===theme) return;
 
@@ -269,9 +235,11 @@ function startArcadeMusic(theme="arcade") {
   currentMusicTheme=theme;
   musicIndex=0;
 
-  if (!getAudio()) return;
+  const ctx=getAudio();
+  if (!ctx || ctx.state!=="running") return;
 
   playMusicStep();
+
   musicTimer=setInterval(
     playMusicStep,
     musicTracks[theme].tempo
@@ -281,6 +249,30 @@ function startArcadeMusic(theme="arcade") {
 function stopArcadeMusic() {
   if (musicTimer) clearInterval(musicTimer);
   musicTimer=null;
+}
+
+function resumeGameAudio() {
+  if (document.hidden) return;
+
+  const activeScreen=document.querySelector(".screen:not(.hidden)");
+  if (!activeScreen || activeScreen.id==="intro") return;
+
+  if (!audioSettings.music) return;
+
+  const ctx=getAudio();
+  if (!ctx) return;
+
+  ctx.resume().then(()=>{
+    if (document.hidden || !audioSettings.music) return;
+
+    if (!musicTimer) {
+      playMusicStep();
+      musicTimer=setInterval(
+        playMusicStep,
+        musicTracks[currentMusicTheme].tempo
+      );
+    }
+  }).catch(()=>{});
 }
 
 function soundButton() {
@@ -349,6 +341,7 @@ function createAudioControls() {
     const btn=document.createElement("button");
     btn.id=id;
     btn.textContent=label;
+
     btn.style.cssText=[
       "background:#29183c",
       "color:#ffd34e",
@@ -370,8 +363,12 @@ function createAudioControls() {
 
   makeButton("jwMusicButton","♫ MÚSICA",()=>{
     audioSettings.music=!audioSettings.music;
-    if (audioSettings.music) startArcadeMusic(currentMusicTheme);
-    else stopArcadeMusic();
+
+    if (audioSettings.music) {
+      startArcadeMusic(currentMusicTheme);
+    } else {
+      stopArcadeMusic();
+    }
   });
 
   makeButton("jwEffectsButton","♪ EFECTOS",()=>{
@@ -386,8 +383,13 @@ function updateAudioControls() {
   const music=$("jwMusicButton");
   const effects=$("jwEffectsButton");
 
-  if (music) music.textContent=audioSettings.music?"♫ MÚSICA ON":"♫ MÚSICA OFF";
-  if (effects) effects.textContent=audioSettings.effects?"♪ EFECTOS ON":"♪ EFECTOS OFF";
+  if (music) {
+    music.textContent=audioSettings.music?"♫ MÚSICA ON":"♫ MÚSICA OFF";
+  }
+
+  if (effects) {
+    effects.textContent=audioSettings.effects?"♪ EFECTOS ON":"♪ EFECTOS OFF";
+  }
 }
 
 /* ==========================================
@@ -430,7 +432,11 @@ function save() {
 function load() {
   try {
     const saved=JSON.parse(localStorage.getItem(SAVE));
-    if(!saved)return;
+
+    if (!saved) {
+      rotateShop(false);
+      return;
+    }
 
     data.coins=Number.isFinite(saved.coins)?saved.coins:1000;
     data.wins=Number.isFinite(saved.wins)?saved.wins:0;
@@ -444,11 +450,13 @@ function load() {
     if(data.activePower&&(!Number.isFinite(data.activePower.remaining)||data.activePower.remaining<=0)){
       data.activePower=null;
     }
-  } catch(e) {
-    console.warn("Se inició una partida nueva.",e);
-  }
 
-  if(!data.shopStock.length)rotateShop(false);
+    if(!data.shopStock.length) rotateShop(false);
+
+  } catch(e) {
+    console.warn("No se pudo cargar la partida.",e);
+    rotateShop(false);
+  }
 }
 
 function hasSkill(id) {
@@ -472,17 +480,24 @@ function hasActive(id) {
 ========================================== */
 
 function cost(type) {
-  let discount=hasSkill("discount")?.25:0;
-  if(hasActive("saver"))discount+=.10;
-  if(hasActive("coupon"))discount+=.20;
-  return Math.max(1,Math.ceil(costs[type]*(1-Math.min(.75,discount))));
+  let discount=hasSkill("discount") ? .25 : 0;
+
+  if(hasActive("saver")) discount+=.10;
+  if(hasActive("coupon")) discount+=.20;
+
+  return Math.max(
+    1,
+    Math.ceil(costs[type]*(1-Math.min(.75,discount)))
+  );
 }
 
 function multiplier() {
   let value=hasSkill("triple")?3:hasSkill("double")?2:1;
-  if(hasActive("fortune"))value*=1.10;
-  if(hasActive("royal"))value*=1.15;
-  if(hasActive("lucky"))value*=1.25;
+
+  if(hasActive("fortune")) value*=1.10;
+  if(hasActive("royal")) value*=1.15;
+  if(hasActive("lucky")) value*=1.25;
+
   return value;
 }
 
@@ -496,34 +511,37 @@ function isFast() {
 
 function update() {
   ["coins","gameCoins","statCoins"].forEach(id=>{
-    if($(id))$(id).textContent=data.coins;
+    if($(id)) $(id).textContent=data.coins;
   });
 
-  if($("statWins"))$("statWins").textContent=data.wins;
-  if($("statGames"))$("statGames").textContent=data.games;
+  if($("statWins")) $("statWins").textContent=data.wins;
+  if($("statGames")) $("statGames").textContent=data.games;
 
-  if($("shopButton")){
+  if($("shopButton")) {
     $("shopButton").textContent=hasSkill("shop")?"TIENDA PIXEL":"🔒 TIENDA";
   }
 
   updatePowerHud();
 
-  if($("shopTimer")){
+  if($("shopTimer")) {
     $("shopTimer").textContent=formatTime(data.shopRemaining);
   }
 }
 
 function formatTime(seconds) {
   seconds=Math.max(0,Math.ceil(seconds||0));
-  return String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0");
+
+  return String(Math.floor(seconds/60)).padStart(2,"0")+":"+
+    String(seconds%60).padStart(2,"0");
 }
 
 function updatePowerHud() {
   const item=activeItem();
   const hud=$("powerHud");
-  if(!hud)return;
 
-  if(item&&data.activePower.remaining>0){
+  if(!hud) return;
+
+  if(item&&data.activePower.remaining>0) {
     hud.classList.add("active");
     $("activePowerText").textContent=item.name.toUpperCase();
     $("activePowerTime").textContent=formatTime(data.activePower.remaining);
@@ -547,13 +565,13 @@ function animateCoinGain(oldCoins,newCoins) {
   const target=screen?.querySelector(".coins");
   const counter=target?.querySelector("b");
 
-  if(!target||!counter)return;
+  if(!target||!counter) return;
 
   let source=null;
 
-  if(currentGame==="slot")source=$("slotResult");
-  if(currentGame==="scratch")source=$("scratchResult");
-  if(currentGame==="rush")source=$("rushResult");
+  if(currentGame==="slot") source=$("slotResult");
+  if(currentGame==="scratch") source=$("scratchResult");
+  if(currentGame==="rush") source=$("rushResult");
 
   const start=source?source.getBoundingClientRect():target.getBoundingClientRect();
   const end=target.getBoundingClientRect();
@@ -563,7 +581,7 @@ function animateCoinGain(oldCoins,newCoins) {
   const endX=end.left+end.width/2;
   const endY=end.top+end.height/2;
 
-  for(let i=0;i<9;i++){
+  for(let i=0;i<9;i++) {
     const coin=document.createElement("span");
     coin.className="jw-flying-coin";
     coin.textContent="🪙";
@@ -583,7 +601,7 @@ function animateCoinGain(oldCoins,newCoins) {
 
     document.body.appendChild(coin);
 
-    if(typeof coin.animate==="function"){
+    if(typeof coin.animate==="function") {
       const animation=coin.animate([
         {transform:"translate(0,0) scale(1)",opacity:1},
         {
@@ -611,7 +629,7 @@ function animateCoinGain(oldCoins,newCoins) {
 
     counter.textContent=Math.round(oldCoins+(newCoins-oldCoins)*eased);
 
-    if(progress<1){
+    if(progress<1) {
       requestAnimationFrame(countUp);
     } else {
       counter.textContent=newCoins;
@@ -646,7 +664,7 @@ function reward(amount) {
 function charge(type) {
   const price=cost(type);
 
-  if(data.coins<price){
+  if(data.coins<price) {
     alert("No tenés fichas suficientes.");
     return false;
   }
@@ -656,6 +674,7 @@ function charge(type) {
 
   save();
   update();
+
   return true;
 }
 
@@ -665,23 +684,27 @@ function charge(type) {
 
 function startSessionClock() {
   sessionActive=true;
-  if(clock)clearInterval(clock);
+
+  if(clock) clearInterval(clock);
 
   clock=setInterval(()=>{
-    if(!sessionActive||document.hidden)return;
+    if(!sessionActive||document.hidden) return;
 
-    if(data.activePower){
+    if(data.activePower) {
       data.activePower.remaining--;
 
-      if(data.activePower.remaining<=0){
+      if(data.activePower.remaining<=0) {
         data.activePower=null;
-        if($("activePowerText"))$("activePowerText").textContent="OBJETO AGOTADO";
+
+        if($("activePowerText")) {
+          $("activePowerText").textContent="OBJETO AGOTADO";
+        }
       }
     }
 
     data.shopRemaining--;
 
-    if(data.shopRemaining<=0)rotateShop(true);
+    if(data.shopRemaining<=0) rotateShop(true);
 
     update();
     save();
@@ -690,10 +713,12 @@ function startSessionClock() {
 
 function stopSessionClock() {
   sessionActive=false;
-  if(clock){
+
+  if(clock) {
     clearInterval(clock);
     clock=null;
   }
+
   save();
 }
 
@@ -701,21 +726,26 @@ function rotateShop(announce) {
   const pool=[...catalog];
   const chosen=[];
 
-  while(chosen.length<Math.min(4,pool.length)){
+  while(chosen.length<Math.min(4,pool.length)) {
     const index=Math.floor(Math.random()*pool.length);
     chosen.push(pool.splice(index,1)[0].id);
   }
 
   data.shopStock=chosen;
   data.shopRemaining=SHOP_SECONDS;
+
   save();
 
-  if($("shopList")&&$("shopPage")&&!$("shopPage").classList.contains("hidden")){
+  if($("shopList")&&$("shopPage")&&!$("shopPage").classList.contains("hidden")) {
     renderShop();
   }
 
-  if(announce&&$("shopList")&&$("shopPage")&&!$("shopPage").classList.contains("hidden")){
-    $("shopList").insertAdjacentHTML("afterbegin",'<p class="rotation-message">¡LA TIENDA SE ACTUALIZÓ!</p>');
+  if(announce&&$("shopList")&&$("shopPage")&&!$("shopPage").classList.contains("hidden")) {
+    $("shopList").insertAdjacentHTML(
+      "afterbegin",
+      '<p class="rotation-message">¡LA TIENDA SE ACTUALIZÓ!</p>'
+    );
+
     soundUnlock();
   }
 }
@@ -729,9 +759,15 @@ function showScreen(id) {
 
   document.querySelectorAll(".screen").forEach(s=>s.classList.add("hidden"));
 
-  $(id).classList.remove("hidden");
+  const nextScreen=$(id);
+  if(!nextScreen) {
+    console.error("No existe la pantalla:",id);
+    return;
+  }
 
-  if(id==="intro"){
+  nextScreen.classList.remove("hidden");
+
+  if(id==="intro") {
     stopSessionClock();
     stopArcadeMusic();
   } else {
@@ -743,29 +779,30 @@ function showScreen(id) {
 }
 
 function stopBusy() {
-  if(spinTimer){
+  if(spinTimer) {
     clearInterval(spinTimer);
     spinTimer=null;
   }
 
   busy=false;
 
-  if($("spin"))$("spin").disabled=false;
+  if($("spin")) $("spin").disabled=false;
 
-  if($("rushReel")){
+  if($("rushReel")) {
     $("rushReel").disabled=false;
     $("rushReel").classList.remove("rolling");
   }
 
-  if($("slotGame")){
+  if($("slotGame")) {
     const machine=$("slotGame").querySelector(".slot-machine");
-    if(machine)machine.classList.remove("spinning");
+    if(machine) machine.classList.remove("spinning");
   }
 }
 
 function back() {
-  $("jokerModal").classList.add("hidden");
-  $("useModal").classList.add("hidden");
+  if($("jokerModal")) $("jokerModal").classList.add("hidden");
+  if($("useModal")) $("useModal").classList.add("hidden");
+
   showScreen("menu");
 }
 
@@ -789,14 +826,17 @@ function openGame(name) {
     rush:"rushGame"
   };
 
+  if(!panels[name]) return;
+
   $("gameTitle").textContent=titles[name];
   $(panels[name]).classList.remove("hidden");
 
-  if(name==="scratch"){
-    if(!charge("scratch")){
+  if(name==="scratch") {
+    if(!charge("scratch")) {
       showScreen("menu");
       return;
     }
+
     createScratch();
   }
 }
@@ -806,12 +846,12 @@ function openGame(name) {
 ========================================== */
 
 function openUseModal() {
-  if(!currentGame){
+  if(!currentGame) {
     alert("Primero entrá en una maquinita.");
     return;
   }
 
-  if(data.activePower){
+  if(data.activePower) {
     alert("Ya tenés un objeto activo.");
     return;
   }
@@ -821,7 +861,7 @@ function openUseModal() {
 
   const owned=catalog.filter(item=>inventoryCount(item.id)>0);
 
-  if(!owned.length){
+  if(!owned.length) {
     list.textContent="NO TENÉS OBJETOS. COMPRALOS EN LA TIENDA.";
   } else {
     owned.forEach(item=>{
@@ -846,7 +886,7 @@ function openUseModal() {
 function activateItem(id) {
   const item=catalog.find(x=>x.id===id);
 
-  if(!item||inventoryCount(id)<=0||data.activePower)return;
+  if(!item||inventoryCount(id)<=0||data.activePower) return;
 
   data.inventory[id]=inventoryCount(id)-1;
   data.activePower={id,remaining:POWER_SECONDS};
@@ -864,7 +904,7 @@ function activateItem(id) {
 ========================================== */
 
 function spin() {
-  if(busy||!charge("slot"))return;
+  if(busy||!charge("slot")) return;
 
   getAudio();
 
@@ -885,21 +925,24 @@ function spin() {
 
     count++;
 
-    if(count%3===0)soundSpinTick(count);
+    if(count%3===0) soundSpinTick(count);
 
-    if(count>=18){
+    if(count>=18) {
       clearInterval(spinTimer);
       spinTimer=null;
 
       let result;
 
-      if(Math.random()<.35){
+      if(Math.random()<.35) {
         const s=symbols[Math.floor(Math.random()*symbols.length)];
         result=[s,s,s];
       } else {
-        result=Array.from({length:3},()=>symbols[Math.floor(Math.random()*symbols.length)]);
+        result=Array.from(
+          {length:3},
+          ()=>symbols[Math.floor(Math.random()*symbols.length)]
+        );
 
-        if(result[0]===result[1]&&result[1]===result[2]){
+        if(result[0]===result[1]&&result[1]===result[2]) {
           result[2]=symbols[(symbols.indexOf(result[2])+1)%symbols.length];
         }
       }
@@ -908,7 +951,7 @@ function spin() {
 
       soundMachineStop();
 
-      if(result[0]===result[1]&&result[1]===result[2]){
+      if(result[0]===result[1]&&result[1]===result[2]) {
         const won=reward(200);
         $("slotResult").textContent="¡JACKPOT! +"+won+" FICHAS";
         soundWin();
@@ -960,7 +1003,7 @@ function createScratch() {
 
     const ctx=canvas.getContext("2d");
 
-    if(!ctx){
+    if(!ctx) {
       finishScratch(index,cell);
       return;
     }
@@ -981,6 +1024,7 @@ function createScratch() {
 
     const pos=e=>{
       const b=canvas.getBoundingClientRect();
+
       return {
         x:(e.clientX-b.left)*ratio,
         y:(e.clientY-b.top)*ratio
@@ -998,26 +1042,27 @@ function createScratch() {
     };
 
     const check=()=>{
-      if(scratchDone[index])return;
+      if(scratchDone[index]) return;
 
       try {
         const px=ctx.getImageData(0,0,canvas.width,canvas.height).data;
         let clear=0;
         let total=0;
 
-        for(let i=3;i<px.length;i+=16){
+        for(let i=3;i<px.length;i+=16) {
           total++;
-          if(px[i]<100)clear++;
+          if(px[i]<100) clear++;
         }
 
-        if(clear/total>=.35)finishScratch(index,cell);
+        if(clear/total>=.35) finishScratch(index,cell);
+
       } catch(e) {
-        if(distance>=canvas.width*2.5)finishScratch(index,cell);
+        if(distance>=canvas.width*2.5) finishScratch(index,cell);
       }
     };
 
     canvas.addEventListener("pointerdown",e=>{
-      if(scratchDone[index])return;
+      if(scratchDone[index]) return;
 
       drawing=true;
       canvas.setPointerCapture(e.pointerId);
@@ -1031,7 +1076,7 @@ function createScratch() {
     });
 
     canvas.addEventListener("pointermove",e=>{
-      if(!drawing||scratchDone[index])return;
+      if(!drawing||scratchDone[index]) return;
 
       const p=pos(e);
       erase(lastX,lastY,p.x,p.y);
@@ -1041,9 +1086,9 @@ function createScratch() {
       lastX=p.x;
       lastY=p.y;
 
-      if(distance>=canvas.width*2.5){
+      if(distance>=canvas.width*2.5) {
         finishScratch(index,cell);
-      } else if(distance%100<15){
+      } else if(distance%100<15) {
         check();
       }
     });
@@ -1058,7 +1103,7 @@ function createScratch() {
 }
 
 function finishScratch(index,cell) {
-  if(scratchDone[index])return;
+  if(scratchDone[index]) return;
 
   scratchDone[index]=true;
   cell.classList.add("scratched");
@@ -1070,14 +1115,14 @@ function finishScratch(index,cell) {
 function checkScratch() {
   const found=scratchDone.filter(Boolean).length;
 
-  if(found<3){
+  if(found<3) {
     $("scratchResult").textContent=found+" DE 3 DESCUBIERTOS";
     return;
   }
 
   const [a,b,c]=scratchSymbols;
 
-  if(a===b&&b===c){
+  if(a===b&&b===c) {
     const won=reward(500);
     $("scratchResult").textContent="¡RASPADAZO! +"+won+" FICHAS";
     soundWin();
@@ -1088,8 +1133,9 @@ function checkScratch() {
 }
 
 function newScratch() {
-  if(busy)return;
-  if(!charge("scratch"))return;
+  if(busy) return;
+  if(!charge("scratch")) return;
+
   createScratch();
 }
 
@@ -1098,7 +1144,7 @@ function newScratch() {
 ========================================== */
 
 function rush() {
-  if(busy||!charge("rush"))return;
+  if(busy||!charge("rush")) return;
 
   getAudio();
 
@@ -1115,9 +1161,9 @@ function rush() {
 
     count++;
 
-    if(count%3===0)soundSpinTick(count);
+    if(count%3===0) soundSpinTick(count);
 
-    if(count>=18){
+    if(count>=18) {
       clearInterval(spinTimer);
       spinTimer=null;
 
@@ -1127,7 +1173,7 @@ function rush() {
       const roll=Math.random()*100;
       const prize=roll<40?0:roll<70?5:roll<88?10:roll<98?20:50;
 
-      if(prize>0){
+      if(prize>0) {
         const won=reward(prize);
         $("rushResult").textContent="¡GANASTE! +"+won+" FICHAS";
         soundWin();
@@ -1179,14 +1225,14 @@ function renderSkills() {
 function buySkill(id) {
   const skill=skills.find(x=>x.id===id);
 
-  if(!skill||hasSkill(id))return;
+  if(!skill||hasSkill(id)) return;
 
-  if(id==="triple"&&!hasSkill("double")){
+  if(id==="triple"&&!hasSkill("double")) {
     alert("Primero comprá Premios x2.");
     return;
   }
 
-  if(data.coins<skill.price){
+  if(data.coins<skill.price) {
     alert("No tenés fichas suficientes.");
     return;
   }
@@ -1239,13 +1285,13 @@ function renderShop() {
     $("shopList").appendChild(card);
   });
 
-  if(!stock.length){
+  if(!stock.length) {
     $("shopList").textContent="LA TIENDA SE ESTÁ PREPARANDO...";
   }
 
   catalog.forEach(item=>{
     const count=inventoryCount(item.id);
-    if(!count)return;
+    if(!count) return;
 
     const card=document.createElement("div");
     card.className="item";
@@ -1261,7 +1307,7 @@ function renderShop() {
     $("collection").appendChild(card);
   });
 
-  if(!$("collection").children.length){
+  if(!$("collection").children.length) {
     $("collection").textContent="TODAVÍA NO TENÉS OBJETOS.";
   }
 
@@ -1285,9 +1331,9 @@ function showItem(item) {
 function buyItem(id) {
   const item=catalog.find(x=>x.id===id);
 
-  if(!item||!data.shopStock.includes(id))return;
+  if(!item||!data.shopStock.includes(id)) return;
 
-  if(data.coins<item.price){
+  if(data.coins<item.price) {
     alert("No tenés fichas suficientes.");
     return;
   }
@@ -1312,13 +1358,12 @@ function init() {
   update();
   createAudioControls();
 
-  // Sonido general de botones.
   document.addEventListener("click",e=>{
     const button=e.target.closest("button");
 
-    if(!button)return;
-    if(button.id==="jwMusicButton"||button.id==="jwEffectsButton")return;
-    if(button.disabled)return;
+    if(!button) return;
+    if(button.id==="jwMusicButton"||button.id==="jwEffectsButton") return;
+    if(button.disabled) return;
 
     soundButton();
   });
@@ -1348,7 +1393,7 @@ function init() {
   });
 
   $("shopButton").addEventListener("click",()=>{
-    if(!hasSkill("shop")){
+    if(!hasSkill("shop")) {
       alert("Primero desbloqueá la tienda en habilidades.");
       return;
     }
@@ -1366,7 +1411,7 @@ function init() {
   });
 
   $("buyJoker").addEventListener("click",()=>{
-    if(selectedItem)buyItem(selectedItem);
+    if(selectedItem) buyItem(selectedItem);
   });
 
   $("usePower").addEventListener("click",openUseModal);
@@ -1375,36 +1420,28 @@ function init() {
     $("useModal").classList.add("hidden");
   });
 
-  document.addEventListener("visibilitychange",()=>{
-    if(!document.hidden)update();
-  });
-
   showScreen("intro");
 }
 
-if(document.readyState==="loading"){
+/* ==========================================
+   PAUSA AUTOMÁTICA DEL AUDIO
+========================================== */
+
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden) {
+    stopArcadeMusic();
+
+    if(audioContext&&audioContext.state==="running") {
+      audioContext.suspend().catch(()=>{});
+    }
+  } else {
+    update();
+    resumeGameAudio();
+  }
+});
+
+if(document.readyState==="loading") {
   document.addEventListener("DOMContentLoaded",init);
 } else {
   init();
 }
-
-document.addEventListener("visibilitychange", async () => {
-  if (document.hidden) {
-    if (audioContext && audioContext.state === "running") {
-      await audioContext.suspend();
-    }
-  } else {
-    if (audioContext && audioContext.state === "suspended") {
-      try {
-        await audioContext.resume();
-      } catch (error) {
-        console.warn("No se pudo reanudar el audio:", error);
-      }
-    }
-
-    update();
-  }
-});
-
-  }
-});
