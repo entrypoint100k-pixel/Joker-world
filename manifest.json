@@ -1,0 +1,19 @@
+
+{
+  "name": "JOKER WORLDS",
+  "short_name": "JOKER WORLDS",
+  "description": "The 8-Bit Pixel Arcade",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#10091d",
+  "theme_color": "#9b4dff",
+  "icons": [
+    {
+      "src": "joker.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ]
+}
