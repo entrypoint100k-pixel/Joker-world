@@ -144,7 +144,7 @@ function getAudio() {
   return audioContext;
 }
 
-function tone(freq,duration=.1,volume=.085,wave="square",delay=0) {
+function tone(freq,duration=.1,volume=.12,wave="square",delay=0) {
   if (!audioSettings.effects || document.hidden) return;
 
   const ctx = getAudio();
@@ -159,7 +159,7 @@ function tone(freq,duration=.1,volume=.085,wave="square",delay=0) {
 
   gain.gain.setValueAtTime(.0001,start);
   gain.gain.exponentialRampToValueAtTime(
-    Math.min(volume * 3,.35),
+    Math.min(volume * 3,.55),
     start+.01
   );
   gain.gain.exponentialRampToValueAtTime(.0001,start+duration);
