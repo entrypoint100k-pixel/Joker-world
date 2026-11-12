@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,91 +7,204 @@
   <meta name="theme-color" content="#10091d">
   <meta name="description" content="JOKER WORLDS - Midnight Arcade">
   <title>JOKER WORLDS</title>
-  <link rel="manifest" href="manifest.json">
   <link rel="icon" href="joker.png">
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <div id="app">
 
-    <header id="header">
-      <div class="logo">🃏 JOKER WORLDS</div>
-      <div class="coins">
-        <span>🪙</span>
-        <span id="coins">1000</span>
-      </div>
-    </header>
+  <!-- INTRO -->
+  <section id="intro" class="screen intro">
+    <div class="logo">
+      <img src="joker.png" alt="Joker Worlds">
+    </div>
+    <h1>JOKER <span>WORLDS</span></h1>
+    <p>MIDNIGHT ARCADE</p>
+    <small>THE ARCADE NEVER SLEEPS</small>
+    <button id="play" class="pixel-button gold">▶ PLAY</button>
+  </section>
 
-    <main>
+  <!-- MENÚ PRINCIPAL -->
+  <section id="menu" class="screen hidden">
 
-      <!-- INTRO -->
-      <section id="intro" class="screen">
-        <h1>JOKER WORLDS</h1>
-        <p>MIDNIGHT ARCADE</p>
-        <div class="joker-logo">🃏</div>
-        <button id="play">PLAY</button>
-      </section>
+    <div class="topbar">
+      <h2>🃏 JOKER WORLDS</h2>
+      <div class="coins">🪙 <span id="coins">1000</span></div>
+    </div>
 
-      <!-- MENU -->
-      <section id="menu" class="screen hidden">
-        <h2>ARCADE</h2>
-        <div class="menu-buttons">
-          <button id="slots">🎰 JOKER SLOTS</button>
-          <button id="scratch">🎟️ SCRATCH PIXEL</button>
-          <button id="rush">⚡ PIXEL RUSH</button>
-          <button id="shop">🛒 TIENDA</button>
-          <button id="skills">🌳 HABILIDADES</button>
-          <button id="leaderboard">🏆 CLASIFICACIÓN</button>
-          <button id="stats">📊 ESTADÍSTICAS</button>
+    <div class="arcade-title">
+      <h2>MIDNIGHT ARCADE</h2>
+      <p>CHOOSE YOUR MACHINE</p>
+    </div>
+
+    <div class="arcade-room">
+
+      <div class="cabinet-unit">
+        <div class="cabinet" id="slots">
+          <div class="cabinet-top">JW <i></i></div>
+          <div class="cabinet-sign">JOKER<br>SLOTS</div>
+          <div class="cabinet-screen">🎰</div>
+          <div class="cabinet-controls"><i></i><i></i></div>
+          <div class="cabinet-bottom">PLAY</div>
         </div>
-      </section>
+        <button class="machine-tree-open" data-machine-tree="slots">MACHINE TREE</button>
+      </div>
 
-      <!-- JUEGOS -->
-      <section id="gamePage" class="screen hidden">
-        <button id="backMenu">⬅ VOLVER</button>
-        <h2 id="gameTitle">ARCADE</h2>
-        <div id="gameContent"></div>
-        <div id="slotMachine"></div>
-        <button id="spin">JUGAR</button>
-        <div id="gameResult"></div>
-      </section>
+      <div class="cabinet-unit">
+        <div class="cabinet" id="scratch">
+          <div class="cabinet-top">JW <i></i></div>
+          <div class="cabinet-sign">SCRATCH<br>PIXEL</div>
+          <div class="cabinet-screen">🎟️</div>
+          <div class="cabinet-controls"><i></i><i></i></div>
+          <div class="cabinet-bottom">PLAY</div>
+        </div>
+        <button class="machine-tree-open" data-machine-tree="scratch">MACHINE TREE</button>
+      </div>
 
-      <!-- TIENDA -->
-      <section id="shopPage" class="screen hidden">
-        <button id="backMenuShop">⬅ VOLVER</button>
-        <h2>TIENDA</h2>
-        <div id="shopTimer"></div>
-        <div id="shopList"></div>
-      </section>
+      <div class="cabinet-unit">
+        <div class="cabinet" id="rush">
+          <div class="cabinet-top">JW <i></i></div>
+          <div class="cabinet-sign">PIXEL<br>RUSH</div>
+          <div class="cabinet-screen">⚡</div>
+          <div class="cabinet-controls"><i></i><i></i></div>
+          <div class="cabinet-bottom">PLAY</div>
+        </div>
+        <button class="machine-tree-open" data-machine-tree="rush">MACHINE TREE</button>
+      </div>
 
-      <!-- HABILIDADES -->
-      <section id="skillsPage" class="screen hidden">
-        <button id="backMenuSkills">⬅ VOLVER</button>
-        <h2>ÁRBOL DE HABILIDADES</h2>
-        <div id="skillTree"></div>
-      </section>
+    </div>
 
-      <!-- CLASIFICACIÓN -->
-      <section id="leaderboardPage" class="screen hidden">
-        <button id="backMenuLeaderboard">⬅ VOLVER</button>
-        <h2>CLASIFICACIÓN GLOBAL</h2>
-        <div id="leaderboardList"></div>
-      </section>
+    <nav class="menu-nav">
+      <button id="shop">🛒 SHOP</button>
+      <button id="skills">🌳 SKILLS</button>
+      <button id="leaderboard">🏆 RANKING</button>
+      <button id="stats">📊 STATS</button>
+    </nav>
 
-      <!-- ESTADÍSTICAS -->
-      <section id="statsPage" class="screen hidden">
-        <button id="backMenuStats">⬅ VOLVER</button>
-        <h2>ESTADÍSTICAS</h2>
-        <div id="statsContent"></div>
-      </section>
+    <footer>JOKER WORLDS © MIDNIGHT ARCADE</footer>
+  </section>
 
-    </main>
+  <!-- JUEGO -->
+  <section id="gamePage" class="screen hidden">
 
-    <footer>
-      <p>JOKER WORLDS © MIDNIGHT ARCADE</p>
-    </footer>
+    <div class="topbar">
+      <button id="backMenu" class="pixel-button">⬅ MENU</button>
+      <div class="coins">🪙 <span id="gameCoins">1000</span></div>
+    </div>
 
+    <div class="arcade-title">
+      <h2 id="gameTitle">JOKER SLOTS</h2>
+      <p>GOOD LUCK, PLAYER</p>
+    </div>
+
+    <div class="power-hud" id="powerHud">
+      <span id="activePower">NO ACTIVE POWER</span>
+      <span id="powerTimer"></span>
+    </div>
+
+    <div class="game-panel">
+      <div id="slotMachine" class="slot-machine">
+        <div class="slot-marquee">🃏 <span>JOKER</span> SLOTS</div>
+        <div class="slot-lights">
+          <i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="slot-frame">
+          <div class="reels">
+            <div class="reel" id="reel1">🐱</div>
+            <div class="reel" id="reel2">🍋</div>
+            <div class="reel" id="reel3">💸</div>
+          </div>
+        </div>
+        <div class="slot-controls">
+          INSERT FUN
+          <div class="slot-buttons"><i></i><i></i><i></i></div>
+        </div>
+        <div class="slot-lever">
+          <div class="lever-ball"></div>
+          <div class="lever-stick"></div>
+          <div class="lever-base"></div>
+        </div>
+      </div>
+
+      <div id="gameContent"></div>
+      <div id="gameResult" class="result"></div>
+      <button id="spin" class="pixel-button gold">▶ PLAY</button>
+    </div>
+
+  </section>
+
+  <!-- TIENDA -->
+  <section id="shopPage" class="screen hidden">
+    <div class="topbar">
+      <button id="backMenuShop" class="pixel-button">⬅ MENU</button>
+      <div class="coins">🪙 <span id="shopCoins">1000</span></div>
+    </div>
+    <div class="arcade-title">
+      <h2>PIXEL SHOP</h2>
+      <p>UPGRADE YOUR ARCADE</p>
+    </div>
+    <div id="shopTimer" class="shop-clock"></div>
+    <div id="shopList" class="items-list"></div>
+  </section>
+
+  <!-- HABILIDADES -->
+  <section id="skillsPage" class="screen hidden">
+    <div class="topbar">
+      <button id="backMenuSkills" class="pixel-button">⬅ MENU</button>
+    </div>
+    <div class="arcade-title">
+      <h2>SKILL TREE</h2>
+      <p>PERMANENT UPGRADES</p>
+    </div>
+    <div id="skillTree" class="items-list"></div>
+  </section>
+
+  <!-- ÁRBOLES DE MÁQUINAS -->
+  <section id="machineTreePage" class="screen hidden">
+    <div class="topbar">
+      <button id="backMenuMachineTree" class="pixel-button">⬅ MENU</button>
+    </div>
+    <div class="arcade-title">
+      <h2>MACHINE TREE</h2>
+      <p>BUILD YOUR ARCADE</p>
+    </div>
+    <div id="machineTreeContent" class="machine-tree-content"></div>
+  </section>
+
+  <!-- CLASIFICACIÓN -->
+  <section id="leaderboardPage" class="screen hidden">
+    <div class="topbar">
+      <button id="backMenuLeaderboard" class="pixel-button">⬅ MENU</button>
+    </div>
+    <div class="arcade-title">
+      <h2>GLOBAL RANKING</h2>
+      <p>TOP PLAYERS</p>
+    </div>
+    <div id="leaderboardProfile" class="leaderboard-profile"></div>
+    <div id="leaderboardStatus" class="leaderboard-status"></div>
+    <div id="leaderboardList" class="leaderboard-list"></div>
+    <button id="refreshLeaderboard" class="pixel-button">REFRESH</button>
+    <div class="leaderboard-note">GLOBAL TOP 50</div>
+  </section>
+
+  <!-- ESTADÍSTICAS -->
+  <section id="statsPage" class="screen hidden">
+    <div class="topbar">
+      <button id="backMenuStats" class="pixel-button">⬅ MENU</button>
+    </div>
+    <div class="arcade-title">
+      <h2>STATISTICS</h2>
+    </div>
+    <div id="statsContent"></div>
+  </section>
+
+  <!-- MODAL -->
+  <div id="modal" class="modal hidden">
+    <div id="modalContent" class="modal-content">
+      <button id="closeModal" class="close-modal">X</button>
+      <div id="modalBody"></div>
+    </div>
   </div>
 
   <script src="expansion.js"></script>
@@ -100,9 +214,10 @@
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker.register("./service-worker.js")
-          .catch(error => console.error("Service Worker:", error));
+          .catch(error => console.error(error));
       });
     }
   </script>
+
 </body>
 </html>
