@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JOKER WORLDS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <section id="intro" class="screen intro">
+    <div class="logo"><img src="joker.png" alt="Joker"></div>
+    <h1>JOKER <span>WORLDS</span></h1>
+    <p>THE 8-BIT PIXEL ARCADE</p>
+    <button id="play" class="pixel-button gold">PLAY</button>
+    <small>WELCOME TO THE ARCADE</small>
+  </section>
+
+  <section id="menu" class="screen hidden">
+    <header class="topbar">
+      <h2>JOKER WORLDS</h2>
+      <div class="coins">FICHAS: <b id="coins">1000</b></div>
+    </header>
+    <div class="arcade-title"><h2>PIXEL ARCADE</h2><p>¡ELEGÍ TU MÁQUINA!</p></div>
+    <div class="arcade-room">
+      <button class="cabinet" data-game="slot">
+        <div class="cabinet-top">JW-01 <i></i></div><div class="cabinet-sign">JOKER<br>SLOTS</div>
+        <div class="cabinet-screen">7 ♦ $</div><div class="cabinet-controls"><i></i><i></i></div><div class="cabinet-bottom">PLAY</div>
+      </button>
+      <button class="cabinet" data-game="scratch">
+        <div class="cabinet-top">JW-02 <i></i></div><div class="cabinet-sign">SCRATCH<br>PIXEL</div>
+        <div class="cabinet-screen">★ $ ★</div><div class="cabinet-controls"><i></i><i></i></div><div class="cabinet-bottom">PLAY</div>
+      </button>
+      <button class="cabinet" data-game="rush">
+        <div class="cabinet-top">JW-03 <i></i></div><div class="cabinet-sign">PIXEL<br>RUSH</div>
+        <div class="cabinet-screen">⚡</div><div class="cabinet-controls"><i></i><i></i></div><div class="cabinet-bottom">PLAY</div>
+      </button>
+    </div>
+    <nav class="menu-nav">
+      <button id="skillsButton">HABILIDADES</button>
+      <button id="shopButton">🔒 TIENDA</button>
+      <button id="statsButton">ESTADÍSTICAS</button>
+    </nav>
+    <footer>JOKER WORLDS · 8-BIT PIXEL ARCADE</footer>
+  </section>
+
+  <section id="game" class="screen hidden">
+    <header class="topbar">
+      <button id="backMenu" class="pixel-button">← VOLVER</button>
+      <h2 id="gameTitle">JUEGO</h2>
+      <div class="coins">FICHAS: <b id="gameCoins">1000</b></div>
+    </header>
+    <div id="powerHud" class="power-hud">
+      <span id="activePowerText">SIN OBJETO ACTIVO</span>
+      <span id="activePowerTime">--:--</span>
+      <button id="usePower" class="pixel-button">USAR OBJETO</button>
+    </div>
+
+    <div id="slotGame" class="game-panel hidden">
+      <div class="slot-machine">
+        <div class="slot-marquee">✦ JOKER <span>SLOTS</span> ✦</div>
+        <div class="slot-lights"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="slot-frame"><div id="reels" class="reels">
+          <div class="reel">7</div><div class="reel">♦</div><div class="reel">$</div>
+        </div></div>
+        <div class="slot-controls">GOOD LUCK!<div class="slot-buttons"><i></i><i></i><i></i></div></div>
+        <div class="slot-lever"><div class="lever-ball"></div><div class="lever-stick"></div><div class="lever-base"></div></div>
+      </div>
+      <p id="slotResult" class="result">¡GIRÁ!</p>
+      <p class="hint">PREMIO: 200 FICHAS · COSTO: 10</p>
+      <button id="spin" class="pixel-button gold">GIRAR</button>
+    </div>
+
+    <div id="scratchGame" class="game-panel hidden">
+      <div class="scratch-machine">
+        <div class="scratch-heading">LUCKY TICKET</div><p class="scratch-instruction">RASPA LOS TRES CUADROS</p>
+        <div id="scratchGrid" class="scratch-grid"></div><div class="scratch-footer">GOOD LUCK!</div>
+      </div>
+      <p id="scratchResult" class="result">¡DESCUBRÍ TU PREMIO!</p>
+      <p class="hint">PREMIO: 500 FICHAS · COSTO: 20</p>
+      <button id="newScratch" class="pixel-button gold">NUEVA TARJETA</button>
+    </div>
+
+    <div id="rushGame" class="game-panel hidden">
+      <div class="rush-machine">
+        <div class="rush-marquee">✦ PIXEL RUSH ✦</div><div class="rush-lights"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="rush-window"><button id="rushReel" class="rush-reel">⚡</button></div>
+        <div class="rush-base">TOCÁ EL RODILLO</div>
+      </div>
+      <p id="rushResult" class="result">¡PROBÁ TU SUERTE!</p>
+      <p class="hint">PREMIO MÁXIMO: 50 · COSTO: 15</p>
+    </div>
+  </section>
+
+  <section id="skillsPage" class="screen hidden">
+    <button class="back pixel-button">← VOLVER</button>
+    <div class="arcade-title"><h2>ÁRBOL DE HABILIDADES</h2><p>MEJORAS PERMANENTES</p></div>
+    <div class="permanent-note">LAS HABILIDADES COMPRADAS NO CADUCAN.</div>
+    <div id="skillsList" class="items-list"></div>
+  </section>
+
+  <section id="shopPage" class="screen hidden">
+    <button class="back pixel-button">← VOLVER</button>
+    <div class="arcade-title"><h2>TIENDA PIXEL</h2><p>JOKERS Y CARTAS DE UN SOLO USO</p></div>
+    <div class="shop-clock">NUEVA TIENDA EN: <b id="shopTimer">03:00</b></div>
+    <div id="shopList" class="items-list"></div>
+    <div class="arcade-title"><h2>MI INVENTARIO</h2><p>ACTIVÁ UN OBJETO DESDE UNA MAQUINITA</p></div>
+    <div id="collection" class="items-list"></div>
+  </section>
+
+  <section id="statsPage" class="screen hidden">
+    <button class="back pixel-button">← VOLVER</button>
+    <div class="arcade-title"><h2>ESTADÍSTICAS</h2></div>
+    <div class="stat-card">FICHAS: <b id="statCoins">1000</b><br>PREMIOS: <b id="statWins">0</b><br>PARTIDAS: <b id="statGames">0</b></div>
+  </section>
+
+  <div id="jokerModal" class="modal hidden">
+    <div class="modal-content">
+      <button id="closeModal" class="close-modal">X</button>
+      <div id="modalSprite" class="modal-sprite"></div>
+      <h2 id="jokerName"></h2><p id="jokerDescription"></p>
+      <button id="buyJoker" class="pixel-button gold">COMPRAR</button>
+    </div>
+  </div>
+
+  <div id="useModal" class="modal hidden">
+    <div class="modal-content">
+      <button id="closeUseModal" class="close-modal">X</button>
+      <h2>ELEGÍ UN OBJETO</h2>
+      <p>Al activarlo empieza a correr su tiempo de 3 minutos.</p>
+      <div id="useList" class="use-list"></div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
