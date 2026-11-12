@@ -1,9 +1,10 @@
 
 {
+  "id": "./",
   "name": "JOKER WORLDS",
   "short_name": "JOKER WORLDS",
-  "id": "./"
-  "description": "The 8-Bit Pixel Arcade",
+  "description": "THE 8-BIT PIXEL ARCADE",
+  "lang": "es",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -13,8 +14,9 @@
   "icons": [
     {
       "src": "joker.png",
-      "sizes": "1024x1024",
-      "type": "image/png"
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }
