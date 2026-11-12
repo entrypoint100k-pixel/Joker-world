@@ -2,6 +2,7 @@
 {
   "name": "JOKER WORLDS",
   "short_name": "JOKER WORLDS",
+  "id": "./"
   "description": "The 8-Bit Pixel Arcade",
   "start_url": "./",
   "scope": "./",
