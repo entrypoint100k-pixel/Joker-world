@@ -144,7 +144,7 @@ function getAudio() {
   return audioContext;
 }
 
-function tone(freq,duration=.1,volume=.025,wave="square",delay=0) {
+function tone(freq,duration=.1,volume=.085,wave="square",delay=0) {
   if (!audioSettings.effects || document.hidden) return;
 
   const ctx = getAudio();
