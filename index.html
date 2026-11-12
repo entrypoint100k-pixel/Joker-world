@@ -3,11 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#10091d">
   <title>JOKER WORLDS</title>
-  <link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#10091d">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -135,12 +131,8 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="game.js"></script>
-  <script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./service-worker.js")
-      .catch(error => console.error("SW error:", error))
-</script>
+  <script src="expansion.js"></script>
 </body>
 </html>

@@ -56,3 +56,34 @@ footer{text-align:center;font-size:7px;color:#79638e;margin-top:30px;padding-top
 .modal-sprite{display:flex;justify-content:center;margin:10px}.use-list{display:flex;flex-direction:column;gap:10px}.use-option{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px;background:#160d22;border:2px solid #8b55b9;font-size:8px;text-align:left}.use-option button{padding:8px;background:var(--green);color:#102015;border:2px solid white;font-family:inherit;font-size:7px}
 @media(max-width:600px){.screen{padding:15px}.arcade-room{gap:12px}.cabinet{width:29%;min-width:95px;min-height:190px;padding:8px 5px;gap:9px}.cabinet-sign{font-size:9px}.cabinet-screen{font-size:11px;padding:10px 2px}.arcade-title h2{font-size:15px}.topbar h2{font-size:8px}.coins{font-size:8px}.menu-nav{gap:8px}.menu-nav button{font-size:7px;padding:9px}.scratch-machine{padding:10px}.rush-reel{height:165px}.power-hud{font-size:7px}.item{width:min(100%,300px)}}
 @media(max-height:500px) and (orientation:landscape){.screen{min-height:100vh;padding:10px 18px}.intro{gap:12px}.logo{width:65px;height:65px}.arcade-room{gap:15px}.cabinet{min-height:165px}.arcade-title{margin:10px 0}.game-panel{margin:12px auto}.slot-machine{width:290px}.slot-lights{padding:5px}.slot-frame{padding:8px}.reel{font-size:32px}.scratch-machine{width:330px;padding:8px}.scratch-heading{padding:8px}.scratch-instruction{margin:8px}.rush-machine{width:250px}.rush-reel{height:110px;font-size:60px}}
+
+
+/* EXPANSIÓN VISUAL: árboles independientes, máquinas y tienda */
+.cabinet-unit{width:145px;display:flex;flex-direction:column;align-items:stretch;gap:12px}
+.cabinet-unit .cabinet{width:100%}
+.machine-tree-open{min-height:42px;padding:9px 6px;background:#211333;border:2px solid var(--gold);color:var(--gold);font:7px 'Press Start 2P',monospace;line-height:1.7;box-shadow:0 4px 0 #76501b}
+.machine-tree-open:active{transform:translateY(3px);box-shadow:0 1px 0 #76501b}
+.machine-tree-content{max-width:900px;margin:0 auto}
+.machine-tree-summary{display:flex;flex-direction:column;align-items:center;gap:12px;padding:18px;margin:15px auto;background:linear-gradient(135deg,#29183d,#160d22);border:3px solid var(--gold);box-shadow:5px 5px 0 #09050e;text-align:center;color:var(--gold);font-size:9px;line-height:2}
+.machine-tree-summary span{color:var(--green)}.machine-tree-summary small{color:#cbb4df;font-size:7px}
+.machine-level-grid,.machine-upgrade-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin:20px auto}
+.machine-level-card,.machine-upgrade-card{display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:12px;padding:14px 10px;background:linear-gradient(160deg,#2b1740,#160d22);border:2px solid #70409b;box-shadow:4px 4px 0 #09050e;text-align:center;min-height:205px}
+.machine-level-card.current{border-color:var(--gold);box-shadow:0 0 0 2px #a56b1c,4px 4px 0 #09050e}
+.machine-level-card.unlocked{border-color:#5caa75}
+.level-tag{font-size:6px;color:var(--green);line-height:1.8}.machine-level-card.current .level-tag{color:var(--gold)}
+.machine-level-card h3,.machine-upgrade-card h3{font-size:9px;color:var(--white);line-height:1.8}
+.level-odds{font-size:25px;color:var(--gold);text-shadow:3px 3px #5a287e}
+.machine-level-card p,.machine-upgrade-card p{font-size:7px;line-height:1.9;color:#cbb4df}
+.machine-level-card small{font-size:6px;line-height:1.8;color:var(--green)}
+.machine-level-card .buy-button,.machine-upgrade-card .buy-button{width:100%;padding:10px 5px;background:var(--gold);color:#24112e;border:2px solid #fff0a5;font:7px 'Press Start 2P',monospace;line-height:1.8}
+.machine-level-card .buy-button:disabled,.machine-upgrade-card .buy-button:disabled{background:#44364e;color:#b7a8c3;border-color:#75617f}
+.machine-upgrade-card{min-height:165px}
+.leaderboard-profile{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;max-width:600px;margin:18px auto;padding:16px;background:#211333;border:2px solid var(--purple);font-size:8px}
+.leaderboard-profile input{min-width:130px;max-width:200px;padding:10px;background:#10091d;color:white;border:2px solid #8e54bf;font:8px 'Press Start 2P',monospace}
+.leaderboard-profile button,.leaderboard-profile label{font:7px 'Press Start 2P',monospace}
+.leaderboard-status,.leaderboard-note{text-align:center;font-size:7px;line-height:2;color:#b89ccf;margin:14px auto;max-width:650px}
+.leaderboard-list{display:flex;flex-direction:column;gap:7px;max-width:650px;margin:15px auto}
+.rank-row{display:grid;grid-template-columns:45px 1fr auto;gap:10px;align-items:center;padding:12px;background:#211333;border:2px solid #70409b;font-size:8px}
+.rank-row strong{color:var(--gold)}.rank-row.rank-top{border-color:var(--gold);background:#30203e}
+#refreshLeaderboard{display:block;margin:15px auto}
+@media(max-width:600px){.cabinet-unit{width:29%;min-width:95px;gap:9px}.machine-tree-open{font-size:6px;padding:8px 3px}.machine-level-grid,.machine-upgrade-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.machine-level-card{min-height:190px;padding:10px 6px}.level-odds{font-size:22px}.rank-row{font-size:7px;grid-template-columns:35px 1fr auto;padding:10px 7px}}
