@@ -1,210 +1,252 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
- {
+/* CONFIGURACIÓN GLOBAL PIXEL ART */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
-  -ms-interpolation-mode: nearest-neighbor;
 }
 
-
-*{box-sizing:border-box;margin:0;padding:0;image-rendering:pixelated}
-:root{--purple:#9b4dff;--dark:#10091d;--panel:#211333;--gold:#ffd34e;--pink:#ff4ca8;--white:#fff4ff;--green:#70f58a;--red:#ff526b}
-body{background:#10091d;color:var(--white);font-family:'Press Start 2P',monospace;min-height:100vh;overflow-x:hidden;background-image:linear-gradient(90deg,#ffffff05 1px,transparent 1px),linear-gradient(#ffffff05 1px,transparent 1px);background-size:8px 8px}
-button{font-family:inherit;cursor:pointer;color:inherit}button:disabled{opacity:.45;cursor:not-allowed}
-.hidden{display:none!important}.screen{min-height:100vh;width:100%;padding:22px}
-.intro{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:24px}
-.logo{width:100px;height:100px;display:grid;place-items:center;background:#55208a;border:5px solid var(--gold);box-shadow:6px 6px 0 #241035,0 0 0 4px var(--purple);overflow:hidden}
-.logo img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated}
-.intro h1{font-size:clamp(22px,6vw,42px);text-shadow:4px 4px #54218b}.intro h1 span{color:var(--gold)}.intro p{color:var(--pink);font-size:10px}.intro small{color:#8c779f;font-size:8px}
-.pixel-button{background:#342047;border:3px solid var(--purple);padding:14px 18px;box-shadow:0 5px 0 #51277b;font-size:9px}
-.pixel-button:active{transform:translateY(4px);box-shadow:0 1px 0 #51277b}
-.gold{background:var(--gold);color:#24112e;border-color:#fff0a5;box-shadow:0 5px 0 #a46c16}.gold:active{box-shadow:0 1px 0 #a46c16}
-.topbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;width:100%}.topbar h2{color:var(--gold);font-size:11px}.coins{font-size:9px;color:var(--gold)}
-.arcade-title{text-align:center;margin:22px 0}.arcade-title h2{color:var(--gold);font-size:18px;text-shadow:3px 3px #6c2a9d;line-height:1.8}.arcade-title p{color:#b89ccf;font-size:8px;margin-top:12px;line-height:1.8}
-.arcade-room{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:25px}
-.cabinet{width:145px;min-height:235px;background:#35184e;border:4px solid #9e58e8;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:12px;box-shadow:0 8px 0 #160c20,0 0 0 4px #170d24}
-.cabinet:active{transform:translateY(3px)}.cabinet-top{width:100%;display:flex;justify-content:space-between;color:var(--gold);font-size:8px}.cabinet-top i,.light{width:10px;height:10px;background:var(--green);box-shadow:3px 3px 0 #28653b}
-.cabinet-sign{font-size:11px;line-height:1.7;color:var(--gold);text-align:center}.cabinet-screen{background:#090712;border:3px solid #c58aff;padding:13px 4px;width:100%;text-align:center;font-size:14px;color:var(--green);text-shadow:2px 2px #245a37}
-.cabinet-controls{display:flex;gap:10px}.cabinet-controls i{width:10px;height:10px;background:var(--pink);border:2px solid #ffd4ec}.cabinet-bottom{background:var(--gold);color:#21112d;padding:8px;width:100%;font-size:9px}
-.menu-nav{display:flex;justify-content:center;gap:15px;flex-wrap:wrap;margin-top:25px}.menu-nav button{background:#29183d;border:2px solid var(--purple);padding:12px;font-size:8px}
-footer{text-align:center;font-size:7px;color:#79638e;margin-top:30px;padding-top:20px}
-.game-panel{width:100%;max-width:600px;margin:25px auto;text-align:center}.result{color:var(--gold);font-size:10px;margin:20px 0;line-height:1.8;min-height:20px}.hint{font-size:8px;color:#b89ccf;line-height:2;margin:12px}
-.power-hud{max-width:600px;margin:18px auto 8px;padding:12px;background:#1b1028;border:3px solid #6d3a9c;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:8px;color:var(--green)}
-.power-hud button{font-size:7px;padding:10px}.power-hud.active{border-color:var(--gold);color:var(--gold)}
-.slot-machine{position:relative;width:min(100%,360px);margin:15px auto;padding:12px 12px 18px;background:#55208a;border:5px solid #e1a6ff;box-shadow:0 0 0 5px #35154e,0 9px 0 #10091d}
-.slot-marquee{background:#6725a0;border:3px solid var(--gold);padding:17px 5px;color:var(--gold);font-size:12px;text-shadow:3px 3px #3d145d}.slot-marquee span{color:white}
-.slot-lights,.rush-lights{display:flex;justify-content:space-around;padding:12px 0}.slot-lights i,.rush-lights i{width:10px;height:10px;background:var(--gold);box-shadow:3px 3px 0 #9a6418;animation:blink 1s steps(2) infinite alternate}.slot-lights i:nth-child(even),.rush-lights i:nth-child(even){animation-delay:.5s}
-@keyframes blink{from{opacity:.35}to{opacity:1}}
-.slot-frame{background:#090611;border:5px solid #e4baff;padding:16px 8px}.reels{display:flex;justify-content:center;gap:9px}
-.reel{width:30%;aspect-ratio:1/1.15;background:#eee3c9;border:4px solid #a17bbd;display:flex;justify-content:center;align-items:center;color:#28113a;font-size:clamp(35px,10vw,55px);text-shadow:3px 3px #c5b5d0}
-.slot-controls{background:#29113f;border:3px solid #7e38ba;margin-top:12px;padding:12px;color:var(--gold);font-size:8px}.slot-buttons{display:flex;justify-content:center;gap:20px;margin-top:10px}.slot-buttons i{width:15px;height:15px;background:var(--pink);border:2px solid white;box-shadow:0 3px 0 #75215c}
-.slot-lever{position:absolute;right:-31px;top:48%;width:32px;height:95px}.lever-base{position:absolute;bottom:0;left:0;width:32px;height:18px;background:#ffd34e;border:3px solid #fff0a5}.lever-stick{position:absolute;width:9px;height:72px;background:#d8d8e5;left:12px;bottom:12px;border:2px solid #777;transform:rotate(-12deg);transform-origin:bottom}.lever-ball{position:absolute;z-index:2;top:0;left:5px;width:23px;height:23px;background:#ff4ca8;border:3px solid white}
-.spinning .lever-stick{animation:leverMove .3s steps(2) infinite alternate}@keyframes leverMove{to{transform:rotate(15deg)}}.spinning .reel{animation:reelShake .12s steps(2) infinite alternate}@keyframes reelShake{from{transform:translateY(-4px)}to{transform:translateY(4px)}}#spin{min-width:180px;margin-top:12px}
-.scratch-machine{width:min(100%,390px);margin:15px auto;padding:15px;background:#55208a;border:5px solid #dcaaff;box-shadow:0 0 0 5px #241035,0 8px 0 #10091d}
-.scratch-heading{background:#241035;border:3px solid var(--gold);color:var(--gold);padding:15px 5px;font-size:12px}.scratch-instruction{color:white;font-size:8px;margin:17px 0;line-height:1.8}
-.scratch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.scratch-cell{position:relative;aspect-ratio:1/1.15;background:#fff8e8;border:4px solid #e7caff;overflow:hidden}.scratch-symbol{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;color:#29113f;font-size:36px}.scratch-cell canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}.scratch-cell.scratched canvas{display:none}
-.scratch-footer{margin-top:15px;padding:12px;background:#241035;color:var(--gold);font-size:9px}#newScratch{margin-top:10px}
-.rush-machine{width:min(100%,310px);margin:15px auto;padding:13px;background:#42166f;border:5px solid #e4baff;box-shadow:0 0 0 5px #301448,0 9px 0 #10091d}
-.rush-marquee{padding:17px 5px;color:var(--gold);background:#29113f;border:3px solid var(--gold);font-size:12px}.rush-window{padding:14px;background:#10091d;border:5px solid #d5aaff}
-.rush-reel{display:flex;justify-content:center;align-items:center;width:100%;height:190px;background:#eee3c9;border:5px solid #a69ab4;color:#331b48;font-size:85px}.rush-reel.rolling{animation:rushRoll .15s steps(2) infinite}@keyframes rushRoll{0%{transform:translateY(-7px)}50%{transform:translateY(7px)}100%{transform:translateY(-7px)}}
-.rush-base{padding:14px 5px;margin-top:12px;background:#29113f;border:3px solid #7e38ba;color:var(--gold);font-size:8px}
-.items-list{display:flex;justify-content:center;flex-wrap:wrap;gap:15px;margin:25px auto}
-.item{width:min(100%,260px);min-height:170px;padding:15px;background:#211333;border:3px solid var(--purple);color:var(--white);text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:12px;font-size:9px;line-height:1.8;box-shadow:4px 4px 0 #0a0610}
-.item h3{color:var(--gold);font-size:10px;line-height:1.8}.item p{color:#cbb4df;font-size:8px;line-height:2}.item .buy-button{background:var(--gold);color:#24112e;border:2px solid #fff0a5;padding:10px;font-family:inherit;font-size:8px}
-.sprite{width:64px;height:64px;image-rendering:pixelated;image-rendering:crisp-edges;border:3px solid #8060a0;background:#10091d}
-.item .sprite{width:72px;height:72px}.modal-sprite .sprite{width:80px;height:80px}
-.permanent-note,.shop-clock{max-width:520px;margin:12px auto;padding:12px;text-align:center;background:#172b20;border:2px solid var(--green);color:var(--green);font-size:8px;line-height:2}
-.shop-clock{background:#241b0c;border-color:var(--gold);color:var(--gold)}
-.stat-card{width:min(100%,350px);padding:20px 12px;background:var(--panel);border:3px solid var(--purple);font-size:9px;line-height:2.5;margin:20px auto}
-.modal{position:fixed;inset:0;z-index:100;background:#08040ddd;display:flex;justify-content:center;align-items:center;padding:20px}
-.modal-content{position:relative;width:min(100%,380px);max-height:85vh;overflow:auto;padding:30px 20px;background:var(--panel);border:4px solid var(--gold);text-align:center;box-shadow:6px 6px 0 #09050e}
-.modal-content h2{color:var(--gold);font-size:13px;line-height:2;margin:15px 0}.modal-content p{font-size:9px;line-height:2;margin-bottom:20px}
-.close-modal{position:absolute;right:8px;top:8px;background:var(--pink);border:2px solid white;padding:7px;font-family:inherit}
-.modal-sprite{display:flex;justify-content:center;margin:10px}.use-list{display:flex;flex-direction:column;gap:10px}.use-option{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px;background:#160d22;border:2px solid #8b55b9;font-size:8px;text-align:left}.use-option button{padding:8px;background:var(--green);color:#102015;border:2px solid white;font-family:inherit;font-size:7px}
-@media(max-width:600px){.screen{padding:15px}.arcade-room{gap:12px}.cabinet{width:29%;min-width:95px;min-height:190px;padding:8px 5px;gap:9px}.cabinet-sign{font-size:9px}.cabinet-screen{font-size:11px;padding:10px 2px}.arcade-title h2{font-size:15px}.topbar h2{font-size:8px}.coins{font-size:8px}.menu-nav{gap:8px}.menu-nav button{font-size:7px;padding:9px}.scratch-machine{padding:10px}.rush-reel{height:165px}.power-hud{font-size:7px}.item{width:min(100%,300px)}}
-@media(max-height:500px) and (orientation:landscape){.screen{min-height:100vh;padding:10px 18px}.intro{gap:12px}.logo{width:65px;height:65px}.arcade-room{gap:15px}.cabinet{min-height:165px}.arcade-title{margin:10px 0}.game-panel{margin:12px auto}.slot-machine{width:290px}.slot-lights{padding:5px}.slot-frame{padding:8px}.reel{font-size:32px}.scratch-machine{width:330px;padding:8px}.scratch-heading{padding:8px}.scratch-instruction{margin:8px}.rush-machine{width:250px}.rush-reel{height:110px;font-size:60px}}
-
-
-/* EXPANSIÓN VISUAL: árboles independientes, máquinas y tienda */
-.cabinet-unit{width:145px;display:flex;flex-direction:column;align-items:stretch;gap:12px}
-.cabinet-unit .cabinet{width:100%}
-.machine-tree-open{min-height:42px;padding:9px 6px;background:#211333;border:2px solid var(--gold);color:var(--gold);font:7px 'Press Start 2P',monospace;line-height:1.7;box-shadow:0 4px 0 #76501b}
-.machine-tree-open:active{transform:translateY(3px);box-shadow:0 1px 0 #76501b}
-.machine-tree-content{max-width:900px;margin:0 auto}
-.machine-tree-summary{display:flex;flex-direction:column;align-items:center;gap:12px;padding:18px;margin:15px auto;background:linear-gradient(135deg,#29183d,#160d22);border:3px solid var(--gold);box-shadow:5px 5px 0 #09050e;text-align:center;color:var(--gold);font-size:9px;line-height:2}
-.machine-tree-summary span{color:var(--green)}.machine-tree-summary small{color:#cbb4df;font-size:7px}
-.machine-level-grid,.machine-upgrade-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin:20px auto}
-.machine-level-card,.machine-upgrade-card{display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:12px;padding:14px 10px;background:linear-gradient(160deg,#2b1740,#160d22);border:2px solid #70409b;box-shadow:4px 4px 0 #09050e;text-align:center;min-height:205px}
-.machine-level-card.current{border-color:var(--gold);box-shadow:0 0 0 2px #a56b1c,4px 4px 0 #09050e}
-.machine-level-card.unlocked{border-color:#5caa75}
-.level-tag{font-size:6px;color:var(--green);line-height:1.8}.machine-level-card.current .level-tag{color:var(--gold)}
-.machine-level-card h3,.machine-upgrade-card h3{font-size:9px;color:var(--white);line-height:1.8}
-.level-odds{font-size:25px;color:var(--gold);text-shadow:3px 3px #5a287e}
-.machine-level-card p,.machine-upgrade-card p{font-size:7px;line-height:1.9;color:#cbb4df}
-.machine-level-card small{font-size:6px;line-height:1.8;color:var(--green)}
-.machine-level-card .buy-button,.machine-upgrade-card .buy-button{width:100%;padding:10px 5px;background:var(--gold);color:#24112e;border:2px solid #fff0a5;font:7px 'Press Start 2P',monospace;line-height:1.8}
-.machine-level-card .buy-button:disabled,.machine-upgrade-card .buy-button:disabled{background:#44364e;color:#b7a8c3;border-color:#75617f}
-.machine-upgrade-card{min-height:165px}
-.leaderboard-profile{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;max-width:600px;margin:18px auto;padding:16px;background:#211333;border:2px solid var(--purple);font-size:8px}
-.leaderboard-profile input{min-width:130px;max-width:200px;padding:10px;background:#10091d;color:white;border:2px solid #8e54bf;font:8px 'Press Start 2P',monospace}
-.leaderboard-profile button,.leaderboard-profile label{font:7px 'Press Start 2P',monospace}
-.leaderboard-status,.leaderboard-note{text-align:center;font-size:7px;line-height:2;color:#b89ccf;margin:14px auto;max-width:650px}
-.leaderboard-list{display:flex;flex-direction:column;gap:7px;max-width:650px;margin:15px auto}
-.rank-row{display:grid;grid-template-columns:45px 1fr auto;gap:10px;align-items:center;padding:12px;background:#211333;border:2px solid #70409b;font-size:8px}
-.rank-row strong{color:var(--gold)}.rank-row.rank-top{border-color:var(--gold);background:#30203e}
-
-/* JOKER WORLDS - COIN REWARD ANIMATION */
-
-.jw-flying-coin {
-  position: fixed;
-  z-index: 99999;
-  pointer-events: none;
-  font-size: 25px;
-  filter: drop-shadow(0 0 7px #ffd34e);
-  will-change: transform, opacity;
-}
-
-.coins.coin-impact {
-  animation: jwCoinImpact .12s ease-in-out 5;
-  color: #fff1a3;
-  text-shadow: 0 0 10px #ffd34e;
-}
-
-@keyframes jwCoinImpact {
-  0% { transform: translateX(0) scale(1); }
-  25% { transform: translateX(-4px) scale(1.12); }
-  50% { transform: translateX(4px) scale(1.15); }
-  75% { transform: translateX(-3px) scale(1.08); }
-  100% { transform: translateX(0) scale(1); }
-}
-
-#refreshLeaderboard{display:block;margin:15px auto}
-@media(max-width:600px){.cabinet-unit{width:29%;min-width:95px;gap:9px}.machine-tree-open{font-size:6px;padding:8px 3px}.machine-level-grid,.machine-upgrade-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.machine-level-card{min-height:190px;padding:10px 6px}.level-odds{font-size:22px}.rank-row{font-size:7px;grid-template-columns:35px 1fr auto;padding:10px 7px}}
-
-/* JOKER WORLDS - COIN CELEBRATION */
-
-.jw-flying-coin {
-  position: fixed;
-  z-index: 99999;
-  pointer-events: none;
-  font-size: 25px;
-  filter: drop-shadow(0 0 7px #ffd34e);
-  will-change: transform, opacity;
-}
-
-.coins.coin-impact {
-  animation: jwCoinImpact .12s ease-in-out 5;
-  color: #fff1a3;
-  text-shadow: 0 0 10px #ffd34e;
-}
-
-@keyframes jwCoinImpact {
-  0% { transform: translateX(0) scale(1); }
-  25% { transform: translateX(-4px) scale(1.12); }
-  50% { transform: translateX(4px) scale(1.15); }
-  75% { transform: translateX(-3px) scale(1.08); }
-  100% { transform: translateX(0) scale(1); }
-}
-/* Contenedor principal de la máquina tragamonedas */
-.slot-machine {
-  background: #2b1f3d; /* Tono oscuro / arcade */
-  border: 4px solid #000000;
-  box-shadow: 
-    inset 4px 4px 0px #5c4382, /* Sombra interna para dar profundidad */
-    inset -4px -4px 0px #140e1f,
-    6px 6px 0px #000000; /* Sombra dura de pixel art */
-  padding: 16px;
-  border-radius: 4px;
-  display: inline-block;
-  text-align: center;
-  image-rendering: pixelated;
-}
-
-/* El "visor" o pantalla donde salen los símbolos */
-.slot-screen {
-  background: #0f380f; /* Verde clásico estilo pantalla de casino antigua o GameBoy */
-  border: 3px solid #000000;
-  box-shadow: inset 3px 3px 0px #001800;
-  padding: 12px;
+body {
+  background-color: #120c1f;
+  color: #fff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
   display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* Cada casilla/rodillo donde giran los símbolos */
+#game-container {
+  width: 100%;
+  max-width: 600px;
+  background-color: #1f1435;
+  border: 4px solid #000;
+  box-shadow: 8px 8px 0px #000;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.screen {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* TIPOGRAFÍAS Y TÍTULOS */
+.game-title {
+  font-size: 18px;
+  color: #f1c40f;
+  text-shadow: 3px 3px 0px #000;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h2, h3 {
+  color: #e67e22;
+  text-shadow: 2px 2px 0px #000;
+  font-size: 12px;
+}
+
+/* BOTONES ESTILO ARCADE */
+.arcade-btn {
+  background-color: #e74c3c;
+  color: #fff;
+  border: 3px solid #000;
+  padding: 12px 20px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  cursor: pointer;
+  box-shadow: 3px 3px 0px #000;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.arcade-btn:hover {
+  background-color: #ff5252;
+}
+
+.arcade-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #000;
+}
+
+.secondary-btn {
+  background-color: #7f8c8d;
+}
+
+.small-btn {
+  padding: 6px 10px;
+  font-size: 8px;
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 80%;
+}
+
+/* CABECERA DE JUEGO */
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+
+.stat-box {
+  background-color: #0f0817;
+  border: 2px solid #000;
+  padding: 8px;
+  font-size: 8px;
+  flex: 1;
+  text-align: center;
+  box-shadow: inset 2px 2px 0px #000;
+}
+
+/* MÁQUINA TRAGAMONEDAS DE CASINO */
+.slot-machine-container {
+  background-color: #2c3e50;
+  border: 4px solid #000;
+  box-shadow: inset 4px 4px 0px #34495e, 4px 4px 0px #000;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.slot-lights {
+  font-size: 12px;
+  margin-bottom: 10px;
+  letter-spacing: 5px;
+}
+
+.slot-screen {
+  background-color: #112211;
+  border: 3px solid #000;
+  box-shadow: inset 3px 3px 0px #000;
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
 .slot-reel {
-  width: 48px;
-  height: 48px;
-  background: #9cadce;
-  border: 2px solid #000000;
+  width: 50px;
+  height: 60px;
+  background-color: #ecf0f1;
+  color: #000;
+  border: 2px solid #000;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Courier New', monospace; /* O una fuente pixel art */
-  font-size: 24px;
-  font-weight: bold;
-  box-shadow: inset 2px 2px 0px #ffffff, inset -2px -2px 0px #5c6b8c;
+  font-size: 20px;
+  box-shadow: inset 2px 2px 0px #fff;
 }
 
-/* El botón de girar estilo palanca/arcade */
-.slot-spin-btn {
-  background: #c0392b; /* Rojo arcade */
-  color: #fff;
-  border: 3px solid #000000;
-  padding: 8px 16px;
-  font-family: inherit;
+.spin-arcade-btn {
+  background-color: #27ae60;
+  width: 100%;
+}
+
+.spin-arcade-btn:hover {
+  background-color: #2ecc71;
+}
+
+/* SECCIÓN DE COMODINES / JOKERS */
+.jokers-section, .hand-section {
+  width: 100%;
+  background-color: #120c1f;
+  border: 2px solid #000;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jokers-grid {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.joker-slot {
+  width: 60px;
+  height: 80px;
+  background-color: #34495e;
+  border: 2px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7px;
+  text-align: center;
+  color: #95a5a6;
+}
+
+.joker-slot.empty {
+  border: 2px dashed #555;
+}
+
+/* CARTAS DE PÓKER */
+.cards-container {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pixel-card {
+  width: 45px;
+  height: 65px;
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #000;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4px;
+  font-size: 8px;
   font-weight: bold;
-  text-transform: uppercase;
-  box-shadow: 
-    inset 2px 2px 0px #e74c3c,
-    inset -2px -2px 0px #962d22,
-    3px 3px 0px #000000;
   cursor: pointer;
+  box-shadow: 2px 2px 0px #000;
+  transition: transform 0.1s;
 }
 
-.slot-spin-btn:active {
-  /* Efecto de botón presionado (hundido) */
-  box-shadow: 
-    inset 2px 2px 0px #962d22,
-    1px 1px 0px #000000;
-  transform: translate(2px, 2px);
+.pixel-card:hover {
+  transform: translateY(-4px);
+}
+
+.pixel-card.selected {
+  background-color: #f1c40f;
+  transform: translateY(-8px);
+}
+
+/* ÁRBOL Y ESTADÍSTICAS */
+.skills-tree-container, .stats-box-content {
+  background-color: #0f0817;
+  border: 2px solid #000;
+  padding: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skill-node {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 8px;
 }
