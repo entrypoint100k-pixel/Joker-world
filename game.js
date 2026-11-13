@@ -35,15 +35,16 @@ document.getElementById('btn-back-menu').addEventListener('click', () => {
     mainMenu.classList.remove('hidden');
 });
 
-// --- VARIABLES DEL JUEGO ---
+// --- VARIABLES DEL JUEGO ( MODO FACILÍSIMO ) ---
 let ronda = 1;
-let fichas = 100;
+let fichas = 500;
 let puntuacionActual = 0;
-let objetivoPuntuacion = 300;
+let objetivoPuntuacion = 100; // ¡Bajado drásticamente para que pases el nivel 1 de un soplo!
 
 function iniciarPartida() {
     ronda = 1;
     puntuacionActual = 0;
+    objetivoPuntuacion = 100;
     actualizarInterfaz();
     generarManoJugador();
 }
@@ -55,7 +56,7 @@ function actualizarInterfaz() {
     document.getElementById('target-num').textContent = objetivoPuntuacion;
 }
 
-// --- GENERAR CARTAS DE EJEMPLO EN LA MANO ---
+// --- GENERAR CARTAS ---
 function generarManoJugador() {
     const contenedorMano = document.getElementById('player-hand');
     contenedorMano.innerHTML = '';
@@ -70,7 +71,7 @@ function generarManoJugador() {
         const cartaDiv = document.createElement('div');
         cartaDiv.classList.add('pixel-card');
         if (paloAleatorio === '♥' || paloAleatorio === '♦') {
-            cartaDiv.style.color = '#c0392b'; // Rojos
+            cartaDiv.style.color = '#c0392b';
         }
         
         cartaDiv.innerHTML = `
@@ -79,7 +80,6 @@ function generarManoJugador() {
             <span style="text-align: right;">${valorAleatorio}</span>
         `;
 
-        // Interacción al hacer clic en la carta (seleccionar)
         cartaDiv.addEventListener('click', () => {
             cartaDiv.classList.toggle('selected');
         });
@@ -88,7 +88,7 @@ function generarManoJugador() {
     }
 }
 
-// --- ANIMACIÓN Y ACCIÓN DE LA MÁQUINA TRAGAMONEDAS ---
+// --- ACCIÓN DE LA MÁQUINA (PREMIOS ALTÍSIMOS) ---
 document.getElementById('btn-spin').addEventListener('click', () => {
     const simbolosCasino = ['🍒', '7️⃣', '⭐', '🍋', '🔔', '💎', '🃏'];
     const r1 = document.getElementById('reel-1');
@@ -102,23 +102,23 @@ document.getElementById('btn-spin').addEventListener('click', () => {
         r3.textContent = simbolosCasino[Math.floor(Math.random() * simbolosCasino.length)];
         contador++;
 
-        if (contador > 12) {
+        if (contador > 10) {
             clearInterval(animacionGiro);
             
-            // Sumar puntos simulados tras el giro / jugada
-            let puntosGanados = Math.floor(Math.random() * 150) + 50;
+            // ¡Puntos regalados para que pases el nivel uno sin sufrir!
+            let puntosGanados = Math.floor(Math.random() * 200) + 150;
             puntuacionActual += puntosGanados;
             
             if (puntuacionActual >= objetivoPuntuacion) {
-                alert('¡RONDA SUPERADA! Pasando a la siguiente ciega...');
+                alert('🎉 ¡NIVEL 1 SUPERADO! ¡Viste que sí se podía!');
                 ronda++;
                 puntuacionActual = 0;
-                objetivoPuntuacion += 200;
-                fichas += 50;
+                objetivoPuntuacion += 150; // Sube suavemente
+                fichas += 100;
             }
 
             actualizarInterfaz();
             generarManoJugador();
         }
-    }, 60);
+    }, 50);
 });
