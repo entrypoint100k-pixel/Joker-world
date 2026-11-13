@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+ {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
 
 *{box-sizing:border-box;margin:0;padding:0;image-rendering:pixelated}
 :root{--purple:#9b4dff;--dark:#10091d;--panel:#211333;--gold:#ffd34e;--pink:#ff4ca8;--white:#fff4ff;--green:#70f58a;--red:#ff526b}
