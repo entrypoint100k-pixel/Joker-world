@@ -1,0 +1,22 @@
+
+{
+  "id": "./",
+  "name": "JOKER WORLDS",
+  "short_name": "JOKER WORLDS",
+  "description": "THE 8-BIT PIXEL ARCADE",
+  "lang": "es",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#10091d",
+  "theme_color": "#9b4dff",
+  "icons": [
+    {
+      "src": "joker.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
