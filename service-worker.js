@@ -1,7 +1,7 @@
 
 "use strict";
 
-const CACHE_NAME = "joker-worlds-v1";
+const CACHE_NAME = "joker-worlds-v8";
 const APP_URL = "./";
 
 self.addEventListener("install", event => {

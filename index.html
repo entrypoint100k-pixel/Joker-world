@@ -51,10 +51,6 @@
 
       <h2>🃏 JOKER WORLDS</h2>
 
-      <div class="coins">
-        🪙 <b id="coins">1000</b>
-      </div>
-
     </div>
 
 
@@ -62,119 +58,22 @@
 
       <h2>MIDNIGHT ARCADE</h2>
 
-      <p>CHOOSE YOUR MACHINE</p>
+      <p>ARMÁ TU MAZO DE JOKERS</p>
 
     </div>
 
 
-    <!-- MÁQUINAS -->
-
-    <div class="arcade-room">
-
-      <!-- JOKER SLOTS -->
-
-      <button
-        class="cabinet"
-        data-game="slot"
-        type="button"
-      >
-
-        <div class="cabinet-top">
-          JW <i></i>
-        </div>
-
-        <div class="cabinet-sign">
-          JOKER<br>SLOTS
-        </div>
-
-        <div class="cabinet-screen">
-          🎰
-        </div>
-
-        <div class="cabinet-controls">
-          <i></i><i></i>
-        </div>
-
-        <div class="cabinet-bottom">
-          PLAY
-        </div>
-
-      </button>
-
-
-      <!-- SCRATCH PIXEL -->
-
-      <button
-        class="cabinet"
-        data-game="scratch"
-        type="button"
-      >
-
-        <div class="cabinet-top">
-          JW <i></i>
-        </div>
-
-        <div class="cabinet-sign">
-          SCRATCH<br>PIXEL
-        </div>
-
-        <div class="cabinet-screen">
-          🎟️
-        </div>
-
-        <div class="cabinet-controls">
-          <i></i><i></i>
-        </div>
-
-        <div class="cabinet-bottom">
-          PLAY
-        </div>
-
-      </button>
-
-
-      <!-- PIXEL RUSH -->
-
-      <button
-        class="cabinet"
-        data-game="rush"
-        type="button"
-      >
-
-        <div class="cabinet-top">
-          JW <i></i>
-        </div>
-
-        <div class="cabinet-sign">
-          PIXEL<br>RUSH
-        </div>
-
-        <div class="cabinet-screen">
-          ⚡
-        </div>
-
-        <div class="cabinet-controls">
-          <i></i><i></i>
-        </div>
-
-        <div class="cabinet-bottom">
-          PLAY
-        </div>
-
-      </button>
-
-    </div>
-
+    <div id="rwMenu"></div>
 
     <!-- NAVEGACIÓN -->
 
     <nav class="menu-nav">
 
-      <button id="shopButton" type="button">
+      <button id="shopButton" type="button" style="display:none">
         🛒 TIENDA
       </button>
 
-      <button id="skillsButton" type="button">
+      <button id="skillsButton" type="button" style="display:none">
         🌳 HABILIDADES
       </button>
 
@@ -620,6 +519,7 @@
   <!-- Expansión: árboles, multiplicadores y ranking -->
 
   <script src="./expansion.js"></script>
+  <script src="./modo-partida.js"></script>
 
 
   <!-- =====================================
